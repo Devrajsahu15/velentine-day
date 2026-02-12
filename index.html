@@ -106,8 +106,8 @@ p{
 <body>
 
 <!-- Background Music -->
-<audio id="bg-music" loop preload="auto">
-  <source src="./music.mp3" type="audio/mpeg">
+<audio id="bg-music" loop>
+  <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <div class="envelope">
@@ -120,21 +120,13 @@ p{
 </div>
 
 <script>
-const envelope = document.getElementById("envelope");
-const music = document.getElementById("bg-music");
 
-envelope.addEventListener("click", function() {
-    envelope.classList.toggle("open");
+/* Start music on first click (mobile supported) */
+document.addEventListener("click", function() {
+  document.getElementById("bg-music").play();
+}, { once: true });
 
-    music.muted = false;
-    music.play().then(() => {
-        console.log("Music started");
-    }).catch(error => {
-        console.log("Playback blocked:", error);
-    });
-});
-
-/* Falling hearts */
+/* Falling hearts animation */
 setInterval(() => {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -147,9 +139,8 @@ setInterval(() => {
       heart.remove();
     }, 5000);
 }, 300);
-</script>
 
+</script>
 
 </body>
 </html>
-
