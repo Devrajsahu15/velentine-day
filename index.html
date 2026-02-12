@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Envelope 💌</title>
+<title>Valentine Surprise 💌</title>
 
 <style>
 body{
@@ -13,19 +13,20 @@ body{
     align-items:center;
     background:#1f2235;
     font-family: Arial, sans-serif;
+    overflow:hidden;
 }
 
-/* Envelope Base */
+/* Envelope */
 .envelope{
     position:relative;
     width:300px;
     height:200px;
     background:#ff4f81;
-    overflow:hidden;          /* Letter hide karne ke liye */
+    overflow:hidden;
     cursor:pointer;
 }
 
-/* Bottom Triangle */
+/* Bottom triangle */
 .envelope::after{
     content:"";
     position:absolute;
@@ -37,7 +38,7 @@ body{
     z-index:1;
 }
 
-/* Top Flap */
+/* Top flap */
 .envelope::before{
     content:"";
     position:absolute;
@@ -55,10 +56,10 @@ body{
 .letter{
     position:absolute;
     width:260px;
-    height: 170px;
+    height:170px;
     background:white;
-    left: 20px;
-    bottom: -170px;      /* Fully hidden */
+    left:20px;
+    bottom:-170px;
     padding:15px;
     box-sizing:border-box;
     text-align:center;
@@ -66,9 +67,8 @@ body{
     z-index:2;
 }
 
-/* Hover Effect */
 .envelope:hover .letter{
-    bottom: 20px;      /* Andar visible */
+    bottom:20px;
 }
 
 .envelope:hover::before{
@@ -84,10 +84,31 @@ p{
     font-size:14px;
     color:#333;
 }
+
+/* Falling Hearts */
+.heart {
+  position: fixed;
+  top: -10px;
+  color: red;
+  font-size: 20px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 
 <body>
+
+<!-- Background Music -->
+<audio id="bg-music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <div class="envelope">
     <div class="letter">
@@ -97,6 +118,29 @@ p{
         <p>Yours Always 💌</p>
     </div>
 </div>
+
+<script>
+
+/* Start music on first click (mobile supported) */
+document.addEventListener("click", function() {
+  document.getElementById("bg-music").play();
+}, { once: true });
+
+/* Falling hearts animation */
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 5000);
+}, 300);
+
+</script>
 
 </body>
 </html>
